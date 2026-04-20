@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { Reveal } from "./Reveal";
 import { SECTION_IDS } from "@/lib/sections";
 import { Button } from "./Button";
+import { useT } from "./LanguageProvider";
 
 type FormState = "idle" | "sending" | "sent" | "error";
 
 export function Contact() {
+  const t = useT();
   const [state, setState] = useState<FormState>("idle");
   const [values, setValues] = useState({
     name: "",
@@ -20,7 +22,6 @@ export function Contact() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setState("sending");
-    // Placeholder — wire up to a real endpoint (Resend, Formspree, etc.)
     try {
       await new Promise((r) => setTimeout(r, 900));
       setState("sent");
@@ -43,8 +44,7 @@ export function Contact() {
         transition={{ duration: 1.5 }}
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_60%,rgba(26,232,95,0.08),transparent_70%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(40%_60%_at_85%_10%,rgba(46,123,255,0.05),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_60%,rgba(255,255,255,0.05),transparent_70%)]" />
       </motion.div>
 
       <div className="container-wide relative">
@@ -52,61 +52,59 @@ export function Contact() {
           <div className="lg:col-span-6">
             <Reveal>
               <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-produ-ink-300">
-                <span className="text-produ-accent">06</span>
+                <span className="text-produ-white">{t.contact.index}</span>
                 <span className="h-px w-8 bg-produ-ink-600" aria-hidden />
-                <span>Contact</span>
+                <span>{t.contact.eyebrow}</span>
               </div>
             </Reveal>
 
             <Reveal delay={0.05}>
               <h2 className="mt-6 font-sans text-display-lg font-black uppercase leading-[0.92] tracking-tightest text-produ-white">
-                Let&apos;s build<br />
-                something<br />
-                <span className="text-produ-accent">worth remembering.</span>
+                {t.contact.titleLines[0]}<br />
+                {t.contact.titleLines[1]}<br />
+                <span className="text-produ-white">{t.contact.titleLines[2]}</span>
               </h2>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="mt-8 max-w-lg text-lg leading-relaxed text-produ-ink-200">
-                Festival mainstage, album release, club residency, permanent
-                installation — if it lives in a room with sound, light and
-                people, we can help design and build it.
+                {t.contact.lead}
               </p>
             </Reveal>
 
             <Reveal delay={0.15}>
               <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
                 <div>
-                  <div className="eyebrow">Studio</div>
+                  <div className="eyebrow">{t.contact.studio}</div>
                   <a
                     href="mailto:hello@produ.studio"
-                    className="mt-3 block font-sans text-lg font-medium text-produ-white transition-colors hover:text-produ-accent"
+                    className="mt-3 block font-sans text-lg font-medium text-produ-white transition-colors hover:text-produ-ink-200"
                   >
                     hello@produ.studio
                   </a>
                 </div>
                 <div>
-                  <div className="eyebrow">Social</div>
+                  <div className="eyebrow">{t.contact.social}</div>
                   <a
                     href="https://instagram.com/produ"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 block font-sans text-lg font-medium text-produ-white transition-colors hover:text-produ-accent"
+                    className="mt-3 block font-sans text-lg font-medium text-produ-white transition-colors hover:text-produ-ink-200"
                   >
                     @produ
                   </a>
                 </div>
                 <div>
-                  <div className="eyebrow">Location</div>
+                  <div className="eyebrow">{t.contact.location}</div>
                   <p className="mt-3 font-sans text-lg font-medium text-produ-white">
-                    Tallinn · Worldwide
+                    {t.contact.locationValue}
                   </p>
                 </div>
                 <div>
-                  <div className="eyebrow">Availability</div>
+                  <div className="eyebrow">{t.contact.availability}</div>
                   <p className="mt-3 flex items-center gap-2 font-sans text-lg font-medium text-produ-white">
-                    <span className="h-2 w-2 animate-slow-pulse bg-produ-accent" />
-                    Booking 2026
+                    <span className="h-2 w-2 animate-slow-pulse bg-produ-white" />
+                    {t.contact.availabilityValue}
                   </p>
                 </div>
               </div>
@@ -118,39 +116,41 @@ export function Contact() {
               <form
                 onSubmit={onSubmit}
                 className="flex flex-col gap-6 border border-produ-ink-700 bg-produ-ink-900/80 p-8 backdrop-blur md:p-10"
-                aria-label="Project inquiry form"
+                aria-label={t.contact.inquiry}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-produ-ink-300">
-                    Project inquiry
+                    {t.contact.inquiry}
                   </span>
                   <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-produ-ink-400">
-                    All fields optional
+                    {t.contact.optional}
                   </span>
                 </div>
 
                 <Field
                   id="name"
-                  label="Your name"
+                  label={t.contact.name}
                   value={values.name}
                   onChange={(v) => setValues({ ...values, name: v })}
                 />
                 <Field
                   id="email"
                   type="email"
-                  label="Email"
+                  label={t.contact.email}
+                  placeholder={t.contact.emailPlaceholder}
                   value={values.email}
                   onChange={(v) => setValues({ ...values, email: v })}
                 />
                 <Field
                   id="project"
-                  label="Project / event"
+                  label={t.contact.project}
                   value={values.project}
                   onChange={(v) => setValues({ ...values, project: v })}
                 />
                 <Field
                   id="message"
-                  label="Tell us about the idea"
+                  label={t.contact.message}
+                  placeholder={t.contact.messagePlaceholder}
                   textarea
                   value={values.message}
                   onChange={(v) => setValues({ ...values, message: v })}
@@ -162,17 +162,13 @@ export function Contact() {
                     role="status"
                     aria-live="polite"
                   >
-                    {state === "idle" && "Reply within 48h"}
-                    {state === "sending" && "Sending…"}
+                    {state === "idle" && t.contact.reply}
+                    {state === "sending" && t.contact.sending}
                     {state === "sent" && (
-                      <span className="text-produ-accent">
-                        Sent — talk soon.
-                      </span>
+                      <span className="text-produ-white">{t.contact.sent}</span>
                     )}
                     {state === "error" && (
-                      <span className="text-produ-red">
-                        Something broke. Email us directly.
-                      </span>
+                      <span className="text-produ-red">{t.contact.error}</span>
                     )}
                   </div>
                   <Button
@@ -180,7 +176,7 @@ export function Contact() {
                     variant="solid"
                     disabled={state === "sending"}
                   >
-                    {state === "sent" ? "Thanks" : "Send inquiry"}
+                    {state === "sent" ? t.contact.thanks : t.contact.submit}
                   </Button>
                 </div>
               </form>
@@ -198,7 +194,8 @@ function Field({
   value,
   onChange,
   type = "text",
-  textarea
+  textarea,
+  placeholder
 }: {
   id: string;
   label: string;
@@ -206,10 +203,11 @@ function Field({
   onChange: (v: string) => void;
   type?: string;
   textarea?: boolean;
+  placeholder?: string;
 }) {
   return (
     <label htmlFor={id} className="group flex flex-col gap-2">
-      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-produ-ink-300 transition-colors group-focus-within:text-produ-accent">
+      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-produ-ink-300 transition-colors group-focus-within:text-produ-white">
         {label}
       </span>
       {textarea ? (
@@ -219,8 +217,8 @@ function Field({
           rows={4}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="resize-none border-b border-produ-ink-600 bg-transparent py-2 font-sans text-base text-produ-white placeholder-produ-ink-500 transition-colors focus:border-produ-accent focus:outline-none"
-          placeholder="Venue, date, scope, references…"
+          className="resize-none border-b border-produ-ink-600 bg-transparent py-2 font-sans text-base text-produ-white placeholder-produ-ink-500 transition-colors focus:border-produ-white focus:outline-none"
+          placeholder={placeholder ?? ""}
         />
       ) : (
         <input
@@ -229,8 +227,8 @@ function Field({
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="border-b border-produ-ink-600 bg-transparent py-2 font-sans text-base text-produ-white placeholder-produ-ink-500 transition-colors focus:border-produ-accent focus:outline-none"
-          placeholder={type === "email" ? "you@label.com" : ""}
+          className="border-b border-produ-ink-600 bg-transparent py-2 font-sans text-base text-produ-white placeholder-produ-ink-500 transition-colors focus:border-produ-white focus:outline-none"
+          placeholder={placeholder ?? ""}
         />
       )}
     </label>

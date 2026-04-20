@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 const siteUrl = "https://produ.studio";
 const siteTitle = "PRODU — Audiovisual Production Studio";
@@ -64,9 +65,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="et" className="dark">
       <body className="bg-produ-black text-produ-white antialiased">
-        {children}
+        <LanguageProvider initial="et">{children}</LanguageProvider>
       </body>
     </html>
   );

@@ -7,10 +7,10 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-produ-white text-produ-black hover:bg-produ-accent hover:text-produ-black",
+    "bg-produ-white text-produ-black hover:bg-produ-ink-100",
   ghost:
     "border border-produ-ink-500 text-produ-white hover:border-produ-white hover:bg-produ-white hover:text-produ-black",
-  solid: "bg-produ-accent text-produ-black hover:bg-produ-white"
+  solid: "bg-produ-white text-produ-black hover:bg-produ-ink-100"
 };
 
 function Arrow() {

@@ -3,39 +3,11 @@
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 import { SECTION_IDS } from "@/lib/sections";
-
-const REASONS = [
-  {
-    index: "01",
-    title: "Creative + technical under one roof",
-    body:
-      "Stages fall apart when creative and technical speak different languages. At PRODU they speak the same one, and they live in the same studio.",
-    keyword: "integrated"
-  },
-  {
-    index: "02",
-    title: "A strong visual identity",
-    body:
-      "Every show gets art direction. We don't render what's on the timeline — we compose a look, a mood and a memory that belongs to the night.",
-    keyword: "art-directed"
-  },
-  {
-    index: "03",
-    title: "Custom solutions, not catalogue",
-    body:
-      "We build what the idea needs, not what fits a rental list. Custom fabrication, custom programming, custom control when the stock answer isn't good enough.",
-    keyword: "bespoke"
-  },
-  {
-    index: "04",
-    title: "Execution you can bet on",
-    body:
-      "Timelines, load-ins, backup plans, show cues. The quiet parts of production we treat as seriously as the creative. That's what separates ambition from spectacle.",
-    keyword: "reliable"
-  }
-];
+import { useT } from "./LanguageProvider";
 
 export function WhyProdu() {
+  const t = useT();
+
   return (
     <section
       id={SECTION_IDS.why}
@@ -43,24 +15,25 @@ export function WhyProdu() {
     >
       <div className="container-wide">
         <SectionHeader
-          index="05"
-          eyebrow="Why PRODU"
+          index={t.why.index}
+          eyebrow={t.why.eyebrow}
           title={
             <>
-              What you get —<br />
-              <span className="text-produ-ink-300">a studio, not a supplier.</span>
+              {t.why.titleTop}
+              <br />
+              <span className="text-produ-ink-300">{t.why.titleBottom}</span>
             </>
           }
-          description="Four reasons clients keep coming back. They're not pitch points; they're how the studio is set up, at the bone level."
+          description={t.why.description}
         />
 
         <div className="mt-16 grid gap-px bg-produ-ink-700 md:mt-20 md:grid-cols-2">
-          {REASONS.map((r, i) => (
+          {t.why.reasons.map((r, i) => (
             <Reveal key={r.index} delay={0.05 * i} className="bg-produ-black">
               <article className="group relative flex h-full items-start gap-6 p-8 md:p-10">
                 <span
                   aria-hidden
-                  className="mt-2 h-2 w-2 shrink-0 bg-produ-accent transition-transform duration-500 group-hover:scale-150"
+                  className="mt-2 h-2 w-2 shrink-0 bg-produ-white transition-transform duration-500 group-hover:scale-150"
                 />
                 <div className="flex-1">
                   <div className="flex items-center justify-between gap-4">

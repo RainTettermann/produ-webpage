@@ -20,7 +20,7 @@ export function SectionHeader({
     <div className={["max-w-4xl", alignClass].join(" ")}>
       <Reveal>
         <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-produ-ink-300">
-          <span className="text-produ-accent">{index}</span>
+          <span className="text-produ-white">{index}</span>
           <span className="h-px w-8 bg-produ-ink-600" aria-hidden />
           <span>{eyebrow}</span>
         </div>

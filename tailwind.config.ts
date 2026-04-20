@@ -24,7 +24,7 @@ const config: Config = {
             100: "#E8E8E8",
             50: "#F4F4F4"
           },
-          accent: "#1AE85F",
+          accent: "#FFFFFF",
           red: "#FF2E2E",
           magenta: "#E91E8C",
           cyan: "#2E7BFF",

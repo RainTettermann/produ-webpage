@@ -1,9 +1,12 @@
 "use client";
 
 import { Logo } from "./Logo";
-import { NAV_ITEMS, SECTION_IDS } from "@/lib/sections";
+import { SECTION_IDS } from "@/lib/sections";
+import { useT } from "./LanguageProvider";
 
 export function Footer() {
+  const t = useT();
+
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -19,16 +22,14 @@ export function Footer() {
           <div className="md:col-span-5">
             <Logo className="h-5 w-auto text-produ-white md:h-6" />
             <p className="mt-6 max-w-md text-sm leading-relaxed text-produ-ink-300">
-              PRODU is an audiovisual production studio building stage,
-              light, and spatial experiences for alternative and electronic
-              music culture.
+              {t.footer.description}
             </p>
           </div>
 
           <div className="md:col-span-3">
-            <h4 className="eyebrow">Navigate</h4>
+            <h4 className="eyebrow">{t.footer.navigate}</h4>
             <ul className="mt-5 space-y-3">
-              {NAV_ITEMS.map((item) => (
+              {t.nav.items.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => scrollTo(item.id)}
@@ -42,7 +43,7 @@ export function Footer() {
           </div>
 
           <div className="md:col-span-4">
-            <h4 className="eyebrow">Contact</h4>
+            <h4 className="eyebrow">{t.footer.contact}</h4>
             <ul className="mt-5 space-y-3 text-sm text-produ-ink-200">
               <li>
                 <a
@@ -68,17 +69,17 @@ export function Footer() {
               onClick={() => scrollTo(SECTION_IDS.contact)}
               className="mt-8 inline-flex items-center gap-2 border border-produ-ink-500 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-produ-white transition-colors hover:border-produ-white"
             >
-              <span className="h-1.5 w-1.5 bg-produ-accent" aria-hidden />
-              Start a project
+              <span className="h-1.5 w-1.5 bg-produ-white" aria-hidden />
+              {t.nav.cta}
             </button>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col items-start gap-4 border-t border-produ-ink-700 pt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-produ-ink-400 md:flex-row md:items-center md:justify-between">
-          <span>© {year} PRODU. All rights reserved.</span>
+          <span>© {year} PRODU. {t.footer.rights}</span>
           <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 animate-slow-pulse bg-produ-accent" aria-hidden />
-            Studio status — available
+            <span className="h-1.5 w-1.5 animate-slow-pulse bg-produ-white" aria-hidden />
+            {t.footer.status}
           </span>
         </div>
       </div>

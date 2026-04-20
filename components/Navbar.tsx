@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "./Logo";
-import { NAV_ITEMS, SECTION_IDS } from "@/lib/sections";
+import { SECTION_IDS } from "@/lib/sections";
+import { useT } from "./LanguageProvider";
+import { LanguageToggle } from "./LanguageToggle";
 
 export function Navbar() {
+  const t = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>(SECTION_IDS.hero);
@@ -19,7 +22,7 @@ export function Navbar() {
 
   // Section scroll-spy
   useEffect(() => {
-    const ids = [SECTION_IDS.hero, ...NAV_ITEMS.map((n) => n.id)];
+    const ids = [SECTION_IDS.hero, ...t.nav.items.map((n) => n.id)];
     const targets = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => !!el);
@@ -38,7 +41,7 @@ export function Navbar() {
 
     targets.forEach((t) => io.observe(t));
     return () => io.disconnect();
-  }, []);
+  }, [t.nav.items]);
 
   const scrollTo = (id: string) => {
     setOpen(false);
@@ -60,18 +63,18 @@ export function Navbar() {
         <button
           onClick={() => scrollTo(SECTION_IDS.hero)}
           className="group flex items-center gap-3"
-          aria-label="PRODU — back to top"
+          aria-label={t.nav.backToTop}
         >
           <Logo className="h-4 w-auto text-produ-white md:h-5" />
           <span
             aria-hidden
-            className="h-1.5 w-1.5 bg-produ-accent transition-opacity duration-300 group-hover:opacity-60"
+            className="h-1.5 w-1.5 bg-produ-white transition-opacity duration-300 group-hover:opacity-60"
           />
         </button>
 
         {/* Desktop nav */}
         <ul className="hidden items-center gap-1 md:flex">
-          {NAV_ITEMS.map((item) => {
+          {t.nav.items.map((item) => {
             const isActive = active === item.id;
             return (
               <li key={item.id}>
@@ -89,7 +92,7 @@ export function Navbar() {
                   <span
                     aria-hidden
                     className={[
-                      "absolute -bottom-px left-4 right-4 h-px origin-left transition-transform duration-300 bg-produ-accent",
+                      "absolute -bottom-px left-4 right-4 h-px origin-left transition-transform duration-300 bg-produ-white",
                       isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                     ].join(" ")}
                   />
@@ -99,38 +102,42 @@ export function Navbar() {
           })}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageToggle size="sm" />
           <button
             onClick={() => scrollTo(SECTION_IDS.contact)}
             className="group relative inline-flex items-center gap-2 border border-produ-white/80 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-produ-white transition-colors hover:bg-produ-white hover:text-produ-black"
           >
-            <span className="h-1.5 w-1.5 bg-produ-accent" aria-hidden />
-            Start a project
+            <span className="h-1.5 w-1.5 bg-produ-white" aria-hidden />
+            {t.nav.cta}
           </button>
         </div>
 
-        {/* Mobile trigger */}
-        <button
-          className="flex h-10 w-10 items-center justify-center md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="relative block h-3 w-6">
-            <span
-              className={[
-                "absolute left-0 top-0 block h-px w-full bg-white transition-transform duration-300",
-                open ? "translate-y-[6px] rotate-45" : ""
-              ].join(" ")}
-            />
-            <span
-              className={[
-                "absolute left-0 bottom-0 block h-px w-full bg-white transition-transform duration-300",
-                open ? "-translate-y-[6px] -rotate-45" : ""
-              ].join(" ")}
-            />
-          </span>
-        </button>
+        {/* Mobile trigger + language */}
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageToggle size="sm" />
+          <button
+            className="flex h-10 w-10 items-center justify-center"
+            aria-label={open ? t.nav.menuClose : t.nav.menuOpen}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="relative block h-3 w-6">
+              <span
+                className={[
+                  "absolute left-0 top-0 block h-px w-full bg-white transition-transform duration-300",
+                  open ? "translate-y-[6px] rotate-45" : ""
+                ].join(" ")}
+              />
+              <span
+                className={[
+                  "absolute left-0 bottom-0 block h-px w-full bg-white transition-transform duration-300",
+                  open ? "-translate-y-[6px] -rotate-45" : ""
+                ].join(" ")}
+              />
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
@@ -144,7 +151,7 @@ export function Navbar() {
             className="md:hidden border-t border-produ-ink-700 bg-produ-black"
           >
             <ul className="container-wide flex flex-col py-4">
-              {NAV_ITEMS.map((item) => (
+              {t.nav.items.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => scrollTo(item.id)}
@@ -163,8 +170,8 @@ export function Navbar() {
                   onClick={() => scrollTo(SECTION_IDS.contact)}
                   className="inline-flex w-full items-center justify-center gap-2 border border-produ-white bg-produ-white px-5 py-3 font-mono text-[12px] uppercase tracking-[0.2em] text-produ-black"
                 >
-                  <span className="h-1.5 w-1.5 bg-produ-accent" aria-hidden />
-                  Start a project
+                  <span className="h-1.5 w-1.5 bg-produ-black" aria-hidden />
+                  {t.nav.cta}
                 </button>
               </li>
             </ul>
