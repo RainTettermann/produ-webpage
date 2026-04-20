@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================================
+   PRODU — Fonts
+   Self-hosted from /public/fonts (Helvetica Neue + PRODU Display)
+   ================================================================ */
+
+@font-face {
+  font-family: "PRODU Display";
+  src: url("/fonts/HelveticaNeuePRODU-PRODU.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue PRODU";
+  src: url("/fonts/HelveticaNeueThin.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue PRODU";
+  src: url("/fonts/HelveticaNeueLight.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue PRODU";
+  src: url("/fonts/HelveticaNeueRoman.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue PRODU";
+  src: url("/fonts/HelveticaNeueMedium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue PRODU";
+  src: url("/fonts/HelveticaNeueBold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue PRODU";
+  src: url("/fonts/HelveticaNeueBlack.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-display: "PRODU Display", "Helvetica Neue PRODU", "Helvetica Neue",
+    "Arial Black", system-ui, sans-serif;
+  --font-body: "Helvetica Neue PRODU", "Helvetica Neue", "Helvetica", "Arial",
+    system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  --bg: #000000;
+  --fg: #ffffff;
+  --accent: #1ae85f;
+  --border: #2a2a2a;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: #000;
+}
+
+/* Focus ring — high contrast, thin, square */
+:where(button, a, input, textarea):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===============================
+   PRODU UTILITIES
+   =============================== */
+
+@layer utilities {
+  .container-wide {
+    @apply mx-auto w-full max-w-[1600px] px-6 md:px-10 lg:px-16;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    @apply text-[11px] font-medium uppercase tracking-[0.22em] text-produ-ink-300;
+  }
+
+  .divider {
+    @apply h-px w-full bg-produ-ink-700;
+  }
+
+  /* Accent caret — a small blinking green square used inline */
+  .accent-caret::after {
+    content: "";
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    margin-left: 0.22em;
+    background: var(--accent);
+    animation: slowPulse 1.8s ease-in-out infinite;
+  }
+
+  /* Grain overlay — subtle film noise */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Hairline borders */
+  .hairline {
+    @apply border border-produ-ink-700;
+  }
+
+  .hairline-t {
+    @apply border-t border-produ-ink-700;
+  }
+
+  .hairline-b {
+    @apply border-b border-produ-ink-700;
+  }
+}
